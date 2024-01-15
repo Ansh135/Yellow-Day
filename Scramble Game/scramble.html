@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melody Madness</title>
+    <link rel="stylesheet" href="scramble.css">
+</head>
+
+<body>
+    <audio id="song" controls><source src="Apocalypse - Cigarettes After Sex.mp3" type="audio/mp3"></audio>
+    <img id="scrambleImg" src="scramble2.jpg">
+    <img id="speaker-icon" src="speaker.jpg" onclick="playAudio()">
+    <div class="scrambleContainer">
+        <div class="scrambleNavBar">
+            <h2>Melody Madness</h2>
+            <h3>Score : <span>0</span></h3>
+        </div>
+        <hr>
+        
+        <div class="content">
+            <p class="word"></p>
+            <div class="scramble-details">
+                <p class="hint">Artist: <span></span></p>
+                <p class="time">Time Left: <span><b>30</b>s</span></p>
+            </div>
+            <input type="text" placeholder="Guess the song name">
+            <div class="buttons">
+                <button class="Refresh-It"><img src="refreshBtn.png" alt="Refresh"></button>
+                <button class="Check-It">Check Song</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+
+        const myAudio = document.getElementById("song");
+        let firstClick = true;
+
+        window.addEventListener('click', () => {
+            if (firstClick) {
+                myAudio.play();
+                firstClick = false;        }
+        })
+        
+        function playAudio() {
+            if (myAudio.paused) {
+                myAudio.play();
+                document.getElementById('speaker-icon').src = "speaker.jpg";
+            } else {
+                myAudio.pause();
+                document.getElementById('speaker-icon').src = "mute.jpg";
+                window.removeEventListener('click', ()=>{myAudio.play()});
+            }
+        }
+
+        const words = [
+                {
+                    word: "starboy",
+                    hint: "The Weeknd"
+                },
+                {
+                    word: "attention",
+                    hint: "Charlie Puth"
+                },
+                {
+                    word: "chlorine",
+                    hint: "twenty one pilots"
+                },
+                {
+                    word: "falling",
+                    hint: "Trevor Daniel"
+                },
+                {
+                    word: "mockingbird",
+                    hint: "Eminem"
+                },
+                {
+                    word: "stay",
+                    hint: "justin beiber"
+                },
+                {
+                    word: "maharani",
+                    hint: "Arpit Bala"
+                },
+                {
+                    word: "perfect",
+                    hint: "Ed Sheeran"
+                },
+                {
+                    word: "wishes",
+                    hint: "Talwinder"
+                },
+                {
+                    word: "khairiyat",
+                    hint: "Arijit Singh"
+                },
+                {
+                    word: "aadat",
+                    hint: "Atif Aslam"
+                },
+                {
+                    word: "daylight",
+                    hint: "David Kushner"
+                },
+            ]
+
+            let abcdef = 0;
+
+            const questionWord = document.querySelector(".word"),
+                hintText = document.querySelector(".hint span"),
+                inputField = document.querySelector("input"),
+                timeText = document.querySelector(".time b"),
+                newWordBtn = document.querySelector(".Refresh-It"),
+                checkAnsBtn = document.querySelector(".Check-It"),
+                scoreCard = document.querySelector(".scrambleNavBar span");
+
+            let sahiWord, timer;
+
+            const initTimer = maxTime => {
+                clearInterval(timer);
+                timer = setInterval(() => {
+                    if (maxTime > 0) {
+                        maxTime--;
+                        return timeText.innerText = maxTime;
+                    }
+                    clearInterval(timer);
+                    alert(`Time out! ${sahiWord.toLocaleUpperCase()} was the song`);
+                    initGame(); 
+                }, 1000);
+            }
+
+
+            const initGame = () => {
+                initTimer(30); 
+                let randomObj = words[Math.floor(Math.random() * words.length)];
+                let wordArray = randomObj.word.split(""); 
+                for (let i = wordArray.length - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1)); 
+                    [wordArray[i], wordArray[j]] = [wordArray[j], wordArray[i]];
+                }
+                questionWord.innerText = wordArray.join(""); 
+                hintText.innerText = randomObj.hint; 
+                sahiWord = randomObj.word.toLowerCase(); 
+                inputField.value = ""; 
+                inputField.setAttribute("maxlength", sahiWord.length);
+            }
+            initGame();
+
+            const checkWord = () => {
+                let userWord = inputField.value.toLocaleLowerCase(); 
+                if (!userWord) return alert("please enter a song name"); 
+                if (userWord !== sahiWord) return alert(`Oops! ${userWord} is not the correct song`);
+                alert(`congrats! ${userWord.toLocaleUpperCase()} is the correct song`);
+                abcdef = abcdef + 1;
+                scoreCard.innerText = abcdef;
+                initGame();
+            }
+            newWordBtn.addEventListener("click", initGame);
+            checkAnsBtn.addEventListener("click", checkWord);
+    </script>
+</body>
+
+</html>
