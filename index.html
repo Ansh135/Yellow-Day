@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<title>Parallax Scrolling Website | Vanilla Javascript</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<header>
+<a href="#" class="logo">Logo</a>
+<ul>
+<li><a href="#" class = "active">Home</a></li>
+<li><a href="#">Fun</a></li>
+<li><a href="#">Downloaded</a></li>
+<li><a href="#">Contact</a></li>
+</ul>
+</header>
+<section>
+    <img src="stars.png" id="stars">
+    <img src="moon.png" id="moon">
+    <img src="mountains_behind.png" id="mountains_behind">
+    <h2 id="text">Moon Light</h2>
+    <a href="#sec" id="btn">Explore</a>
+    <img src="mountains_front.png" id="mountains_front">
+</section>
+<div class="sec" id = "sec">
+    <h2>Music and its power</h2>
+    <p>Music is a universal language that transcends cultural boundaries, connecting people from diverse backgrounds and experiences. It serves as a powerful form of expression, allowing artists to convey emotions, tell stories, and communicate complex ideas. From classical symphonies to contemporary pop hits, music reflects the rich tapestry of human creativity. Whether through the intricate compositions of Mozart, the soul-stirring melodies of jazz, or the pulsating beats of electronic dance music, each genre offers a unique sonic experience that resonates with listeners on a profound level.<br><br>Beyond its emotional impact, music plays a crucial role in shaping cultural identity and societal norms. It serves as a mirror reflecting the values, struggles, and aspirations of different communities. Folk music, for example, encapsulates the traditions and folklore of specific regions, preserving cultural heritage for generations. Similarly, protest songs have historically been catalysts for social change, providing a voice to marginalized communities and sparking movements for justice and equality. Music, therefore, is not just an auditory pleasure but a dynamic force that molds and mirrors the societies in which it thrives.<br><br>Moreover, the evolution of technology has transformed the landscape of music consumption and production. The advent of digital platforms, streaming services, and home recording studios has democratized the creation and distribution of music. Independent artists now have unprecedented access to global audiences, challenging traditional industry models. This democratization fosters a diverse musical ecosystem, encouraging innovation and experimentation across genres. As we navigate the ever-changing soundscape of the digital age, music continues to be a vibrant and evolving art form, enriching our lives and providing a soundtrack to the human experience.</p>
+</div>    
+<script>
+    let stars = document.getElementById('stars');
+    let moon = document.getElementById('moon');
+    let mountains_behind = document.getElementById('mountains_behind');
+    let text = document.getElementById('text');
+    let btn = document.getElementById('btn');
+    let mountains_front = document.getElementById('mountains_front');
+
+    window.addEventListener('scroll', function(){
+        let value = window.scrollY;
+        stars.style.left = value * 0.25 + 'px';
+        moon.style.top = value * 1.05 + 'px';
+        mountains_behind.style.top = value * 0.5 + 'px';
+        mountains_front.style.top = value * + 'px';
+        text.style.marginRight = value * 4 + 'px';
+    })
+
+</script>
+</body>
+</html>
